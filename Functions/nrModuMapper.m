@@ -5,11 +5,15 @@ function symbOut= nrModuMapper(bitsIn,moduType)
 
 b = bitsIn;
 switch lower(moduType)
+    case '3psk'  % i,1,-i
+        symbOut = [1j, 1, -1j];
+        
     case 'bpsk'
         symbOut = zeros(size(b));
         for i = 0:length(bitsIn)-1
            symbOut(i+1) =  0.5*sqrt(2)*((1 - 2*b(i+1)) + 1j*(1-2*b(i+1)));
         end
+        
         
     case 'qpsk'
         nOfBitsIn = length(bitsIn);
@@ -17,7 +21,17 @@ switch lower(moduType)
         symbOut = zeros(nOfBitsIn/2,1);
         for i = 0: nOfBitsIn/2-1
             symbOut(i+1) = 1/sqrt(2)*((1-2*b(2*i+1))+1j*(1-2*b(2*i+2)));
+%             bb = [b(2*i+1), b(2*i+2)];
+%             bdec =  2*  bb(1) +  bb(2);
+%             switch bdec
+%                 case 0; symbOut(i+1) = sqrt(1/2)*(1+1j);
+%                 case 1; symbOut(i+1) = sqrt(1/2)*(-1+1j);
+%                 case 2; symbOut(i+1) = sqrt(1/2)*(-1-1j);
+%                 case 3; symbOut(i+1) = sqrt(1/2)*(1-1j);
+%             end
         end
+%         
+        
         
     case '16qam'
         

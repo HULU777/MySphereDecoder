@@ -9,6 +9,8 @@ function constls = genConstls(moduTypes)
     for i = 1: length(moduTypes)
         moduType = moduTypes{i};
         switch lower(moduType)
+        case '3psk'
+            M =3;
         case 'bpsk'
             M =2;
         case 'qpsk'

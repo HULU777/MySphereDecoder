@@ -1,26 +1,25 @@
 clear all;
 addpath('Functions');
-EBN0dB=0:2:16;                             % EB/N0 in dB
-SNR=EBN0dB+10*log10(2);
-% SNR = 0:4:20;   % dB
+
+SNR = 0:4:20;   % dB
 nErrs = zeros(1,length(SNR));
 nErrs1 = zeros(1,length(SNR));
 nDiff = zeros(1,length(SNR));
-run = 1e6;
+run = 1e3;
 Nt = 4; B = Nt;
 Nr = 4; n = Nr;
 % moduTypes = {'3psk','3psk','3psk'}; %
-moduTypes = {'qpsk','qpsk','qpsk','qpsk'};
-% moduTypes = {'bpsk','bpsk','bpsk','bpsk'};
-% Ks = ones(1,4);
-% offsets = [0,1,2,3];
-% Ms = [2,2,2,2];
+% moduTypes = {'qpsk','qpsk','qpsk','qpsk'};
+moduTypes = {'bpsk','bpsk','bpsk','bpsk'};
+Ks = ones(1,4);
+offsets = [0,1,2,3];
+Ms = [2,2,2,2];
 % constls = genConstls(moduTypes);
 qam16 = 0;
 % bits per symbol for each antenna
-Ks = [2,2,2,2];
-offsets = [0,2,4,6];
-Ms = [4,4,4,4];
+% Ks = [2,2,2,2];
+% offsets = [0,2,4,6];
+% Ms = [4,4,4,4];
 tic
 
 
@@ -70,10 +69,10 @@ for i = 1:length(SNR)
     % ==================================================================
     outType = 'hard';
     [out,nVistedNodes] = nrSphereDecoder(H,rxSymbs,moduTypes,outType);
-%     dec_seq = fpSD(H,rxSymbs,N0);
+    dec_seq = fpSD(H,rxSymbs,N0);
     nErrs(i) = sum(out ~= msg) + nErrs(i);
-%     nErrs1(i) = sum(dec_seq' ~= msg) + nErrs1(i);
-%     nDiff(i) = sum(out ~= dec_seq') + nDiff(i);
+    nErrs1(i) = sum(dec_seq' ~= msg) + nErrs1(i);
+    nDiff(i) = sum(out ~= dec_seq') + nDiff(i);
     j = j + 1;
     end
 end
@@ -88,9 +87,9 @@ disp(moduTypes)
 
 % fprintf('(SD) Error bits: %d out of %d\n',nErrs,length(msg) );
 fprintf(' - (Hard SD) %d of %d leaf nodes are visited.', nVistedNodes,prod(Ms) );
-semilogy(EBN0dB, BER,'-^');
-xlim([0,28]); 
-ylim([1e-5,1]);
+semilogy(SNR, BER);
+xlim([0,20]); 
+ylim([1e-4,1]);
 
 % ==================================================================
 % outType = 'soft';
@@ -98,8 +97,7 @@ ylim([1e-5,1]);
 % nErrs = sum((outSoft < 0) ~= msg);
 % 
 % %fprintf('(Soft SD)Error bits: %d out of %d\n',nErrs,length(msg) );
-% fprintf(' - (Soft SD)%d of %d leaf nodes are visited\n',
-% nVistedNodes,prod(Ms) );git
+% fprintf(' - (Soft SD)%d of %d leaf nodes are visited\n', nVistedNodes,prod(Ms) );
 % 
 % % ======================================================================
 % % ZF

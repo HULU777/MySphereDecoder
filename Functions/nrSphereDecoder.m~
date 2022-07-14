@@ -58,7 +58,7 @@ function [out,nVistedNodes] = nrSphereDecoder(H,rxSymbs,moduTypes,outType)
     
     
     % hypothesis minimum distances for ML bits and its counterpart
-    lambdaML = inf;% sacler
+    lambdlaML = inf;% sacler
     lambdaMLBar = inf*ones(1,nOutBits);
     
     % The Output
@@ -68,21 +68,17 @@ function [out,nVistedNodes] = nrSphereDecoder(H,rxSymbs,moduTypes,outType)
         out = false(1,nOutBits);
     end
     
-    if Nr >= Nt
-        % QR decomposition of H
-        [Q, R] = qr(H,0);
-        Qy = Q'*rxSymbs;   %Q^H*y
-    else
-        % transform to full-rank
-        lambda = 1;
-        [~,n] = size(H);
-        ATA = H' * H + lambda * eye(n);
-        R = chol(ATA);
-        Qy = R' \ H' * rxSymbs;   % inv(R' ) * H' * rxSymbs;
-    end
+    % transform to full-rank
+    lambda = 1;
+    [~,n] = size(H);
+    ATA = H' * H + lambda * eye(n);
+    A = chol(ATA);
+    Qy = inv(K') * H' * rxSymbs;
     
     
-    
+    % QR decomposition of H
+%     [Q, R] = qr(H,0);
+%     Qy = Q'*rxSymbs;   %Q^H*y
     
     
     % intinitalize patial symbol vector of the visiting node & PD
