@@ -58,7 +58,7 @@ function [out,nVistedNodes] = nrSphereDecoder(H,rxSymbs,moduTypes,outType)
     
     
     % hypothesis minimum distances for ML bits and its counterpart
-    lambdlaML = inf;% sacler
+    lambdaML = inf;% sacler
     lambdaMLBar = inf*ones(1,nOutBits);
     
     % The Output
@@ -68,17 +68,23 @@ function [out,nVistedNodes] = nrSphereDecoder(H,rxSymbs,moduTypes,outType)
         out = false(1,nOutBits);
     end
     
-    % transform to full-rank
-    lambda = 1;
-    [~,n] = size(H);
-    ATA = H' * H + lambda * eye(n);
-    A = chol(ATA);
-    Qy = inv(K') * H' * rxSymbs;
+    if Nr > Nt
+        % QR decomposition of H
+        [Q, R] = qr(H,0);
+        Qy = Q'*rxSymbs;   %Q^H*y
+    else
+        % transform to full-rank
+        lambda = 0.1;
+        [~,n] = size(H);
+        ATA = H' * H + lambda * eye(n);
+%         R = chol(ATA);
+        D = chol(ATA);
+        [Q, R] = qr(D,0);
+        Qy = (Q*R)' \ H' * rxSymbs;   % inv(R' ) * H' * rxSymbs;
+    end
     
     
-    % QR decomposition of H
-%     [Q, R] = qr(H,0);
-%     Qy = Q'*rxSymbs;   %Q^H*y
+    
     
     
     % intinitalize patial symbol vector of the visiting node & PD
@@ -95,7 +101,7 @@ function [out,nVistedNodes] = nrSphereDecoder(H,rxSymbs,moduTypes,outType)
         curLevl = Nt - length(psv) +1;
         %disp(psvIdx);
         % compute distance increment
-        di = abs(Qy(curLevl) -  sum(R(curLevl,curLevl:Nt).*psv)).^2;
+        di = abs(Qy(curLevl) -  sum(Q*R(curLevl,curLevl:Nt).*psv)).^2;
     
         % compute partial Eucidean distance
         if curLevl == Nt

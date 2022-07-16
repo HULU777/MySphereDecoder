@@ -1,16 +1,20 @@
 clear all;
 addpath('Functions');
-EBN0dB=0:2:16;                             % EB/N0 in dB
-SNR=EBN0dB+10*log10(2);
-% SNR = 0:4:20;   % dB
+% EBN0dB=-2:2:6;     
+M=2;  % EB/N0 in dB
+% SNR=EBN0dB+10*log10(2);   % QPSK
+SNR = 5:5:35;   % dB
+% targeterr = [0.3 0.2 0.1 0.03 0.003 0.0004 0.00003 ];
+% run = ceil(50 ./ targeterr);
+run = ones(1,length(SNR))*2e4;
 nErrs = zeros(1,length(SNR));
 nErrs1 = zeros(1,length(SNR));
 nDiff = zeros(1,length(SNR));
-run = 1e6;
-Nt = 4; B = Nt;
-Nr = 4; n = Nr;
+% run = 2e6;
+Nt = 5; B = Nt;
+Nr = 2; n = Nr;
 % moduTypes = {'3psk','3psk','3psk'}; %
-moduTypes = {'qpsk','qpsk','qpsk','qpsk'};
+
 % moduTypes = {'bpsk','bpsk','bpsk','bpsk'};
 % Ks = ones(1,4);
 % offsets = [0,1,2,3];
@@ -18,22 +22,26 @@ moduTypes = {'qpsk','qpsk','qpsk','qpsk'};
 % constls = genConstls(moduTypes);
 qam16 = 0;
 % bits per symbol for each antenna
-Ks = [2,2,2,2];
-offsets = [0,2,4,6];
-Ms = [4,4,4,4];
+
+
 tic
-
-
-for i = 1:length(SNR)
+parfor i = 1:length(SNR)
     %generate msg bits
+    tic
     j = 0;
-    while j < run
+    while j < run(i)
         if qam16
             moduTypes = {'16qam','16qam','16qam','16qam'};
             Ks = [4,4,4,4];
             offsets = [0,4,8,12];
             Ms = [16,16,16,16];
         end
+    cellA={'qpsk'};
+    moduTypes = repmat(cellA,1,Nt);
+    Ks = 2* ones(1,Nt);
+    offsets = 0:2:(Nt-1)*2;
+    Ms = 4* ones(1,Nt);
+%     len = 2*Nt;
     % number bits to transform
     totBits = sum(Ks);
     msg = randi([0,1],totBits,1);  % ones(B,1);
@@ -76,21 +84,24 @@ for i = 1:length(SNR)
 %     nDiff(i) = sum(out ~= dec_seq') + nDiff(i);
     j = j + 1;
     end
+    tt = toc
 end
 t = toc;
-BER = nErrs/(length(msg)*run)
+BER = nErrs ./(Nt*M*run)
 % BER1 = nErrs1/(length(msg)*run)
 disp('Sim Results')
 disp('------------------')
-fprintf("Tx Antennas:%d,Rx Antennas: %d \n", Nt,Nr);
+% fprintf("Tx Antennas:%d,Rx Antennas: %d \n", Nt,Nr);
 fprintf('Modulations:')
-disp(moduTypes)
+% disp(moduTypes)
 
 % fprintf('(SD) Error bits: %d out of %d\n',nErrs,length(msg) );
-fprintf(' - (Hard SD) %d of %d leaf nodes are visited.', nVistedNodes,prod(Ms) );
-semilogy(EBN0dB, BER,'-^');
-xlim([0,28]); 
+% fprintf(' - (Hard SD) %d of %d leaf nodes are visited.', nVistedNodes,prod(Ms) );
+semilogy(SNR, BER,'-^');
+% semilogy(EBN0dB, BER,'-^');
+xlim([5,35]); 
 ylim([1e-5,1]);
+grid on;
 
 % ==================================================================
 % outType = 'soft';

@@ -75,9 +75,11 @@ function [out,nVistedNodes] = nrSphereDecoder(H,rxSymbs,moduTypes,outType)
     else
         % transform to full-rank
         lambda = 1;
-        [~,n] = size(H);
+        n = max(size(H));
         ATA = H' * H + lambda * eye(n);
         R = chol(ATA);
+%         D = chol(ATA);
+%         [Q, R] = qr(D,0);
         Qy = R' \ H' * rxSymbs;   % inv(R' ) * H' * rxSymbs;
     end
     
