@@ -50,16 +50,16 @@ function [out,nVistedNodes] = nrSphereDecoder(H,rxSymbs,moduTypes,outType)
     
     
     % hypothesis ML bits
-    bitsML = false(1,nOutBits);
-    for i = 1: Nt
-        bitsML(offsets(i)+ (1:constls{1,i})) = constls{3,i}(1,:);  % first phase 0,0; 0,0,0,0; 0,0
-    end
-    bitsML = false(1,Nt);
+%     bitsML = false(1,nOutBits);
+%     for i = 1: Nt
+%         bitsML(offsets(i)+ (1:constls{1,i})) = constls{3,i}(1,:);  % first phase 0,0; 0,0,0,0; 0,0
+%     end
+%     bitsML = false(1,Nt);
     
     
     % hypothesis minimum distances for ML bits and its counterpart
     lambdaML = inf;% sacler
-    lambdaMLBar = inf*ones(1,nOutBits);
+%     lambdaMLBar = inf*ones(1,nOutBits);
     
     % The Output
     if isSoftDec
@@ -74,7 +74,7 @@ function [out,nVistedNodes] = nrSphereDecoder(H,rxSymbs,moduTypes,outType)
         Qy = Q'*rxSymbs;   %Q^H*y
     else
         % transform to full-rank
-        lambda = 1;
+        lambda = 0.1;
         n = max(size(H));
         ATA = H' * H + lambda * eye(n);
         R = chol(ATA);

@@ -3,10 +3,10 @@ addpath('Functions');
 % EBN0dB=-2:2:6;     
 M=2;  % EB/N0 in dB
 % SNR=EBN0dB+10*log10(2);   % QPSK
-SNR = 5:5:35;   % dB
+SNR = ones(1,8)*35;   % dB
 % targeterr = [0.3 0.2 0.1 0.03 0.003 0.0004 0.00003 ];
 % run = ceil(50 ./ targeterr);
-run = ones(1,length(SNR))*2e4;
+run = ones(1,length(SNR))*100;
 nErrs = zeros(1,length(SNR));
 nErrs1 = zeros(1,length(SNR));
 nDiff = zeros(1,length(SNR));
@@ -83,8 +83,8 @@ parfor i = 1:length(SNR)
 %     nErrs1(i) = sum(dec_seq' ~= msg) + nErrs1(i);
 %     nDiff(i) = sum(out ~= dec_seq') + nDiff(i);
     j = j + 1;
+    tt = toc;
     end
-    tt = toc
 end
 t = toc;
 BER = nErrs ./(Nt*M*run)

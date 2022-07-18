@@ -3,16 +3,17 @@ addpath('Functions');
 % EBN0dB=-2:2:6;     
 M=2;  % EB/N0 in dB
 % SNR=EBN0dB+10*log10(2);   % QPSK
-SNR = 5:5:30;   % dB
+SNR =  10:2:12;   % dB
 % targeterr = [0.3 0.2 0.1 0.03 0.003 0.0004 0.00003 ];
 % run = ceil(50 ./ targeterr);
-run = ones(1,length(SNR))*2e5;
+run = ones(1,length(SNR))*100000;
+part = 8;
 nErrs = zeros(1,length(SNR));
 nErrs1 = zeros(1,length(SNR));
 nDiff = zeros(1,length(SNR));
 % run = 2e6;
-Nt = 5; B = Nt;
-Nr = 2; n = Nr;
+Nt = 16; B = Nt;
+Nr = 14; n = Nr;
 % moduTypes = {'3psk','3psk','3psk'}; %
 
 % moduTypes = {'bpsk','bpsk','bpsk','bpsk'};
@@ -83,8 +84,8 @@ parfor i = 1:length(SNR)
 %     nErrs1(i) = sum(dec_seq' ~= msg) + nErrs1(i);
 %     nDiff(i) = sum(out ~= dec_seq') + nDiff(i);
     j = j + 1;
+    tt = toc;
     end
-    tt = toc
 end
 t = toc;
 BER = nErrs ./(Nt*M*run)
