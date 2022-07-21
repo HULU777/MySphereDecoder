@@ -95,6 +95,7 @@ function [out,nVistedNodes] = nrSphereDecoder(H,rxSymbs,moduTypes,outType)
     ped = zeros(1,Nt);
     traverseDone = false;
     nVistedNodes = 0;
+%     nodelistnum = 0;
     while (~traverseDone)
     
         

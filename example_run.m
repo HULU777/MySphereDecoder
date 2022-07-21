@@ -1,3 +1,6 @@
+% BER = [0.3041 0.2402 0.1194 0.0302 0.00398 0.0004138 0.0000425];
+% semilogy(5:5:35, BER,'-+');grid on;
+
 clear all;
 addpath('Functions');
 % EBN0dB=-2:2:6;     

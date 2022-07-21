@@ -1,4 +1,4 @@
-function symbOut= nrModuMapper(bitsIn,moduType)
+function symbOut= nrModuMapper(bitsIn,moduType,M)
 % symbOut = nrModuMapper(bitsIn,moduType) maps the bit sequence into 
 % complex modulation symbols using modulation scheme specified in TS 38.211 Section 5.1
 % The modulation scheme, 'moduType' must be one of  'BPSK', 'QPSK', '16QAM', '64QAM', '256QAM'.
@@ -6,7 +6,7 @@ function symbOut= nrModuMapper(bitsIn,moduType)
 b = bitsIn;
 switch lower(moduType)
     case '3psk'  % i,1,-i
-        symbOut = [1j, 1, -1j];
+        symbOut = [1, 0, -1] * sqrt(1/M);
         
     case 'bpsk'
         symbOut = zeros(size(b));
