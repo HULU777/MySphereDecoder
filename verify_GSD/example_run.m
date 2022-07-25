@@ -135,7 +135,7 @@ grid on;
 % fprintf('(MMSE) Error bits: %d out of %d\n',nErrs,length(msg) );
 
 
-
+%  BER = [0.3041 0.2402 0.1194 0.03026 0.004 4.138e-4 4.25e-5];
 
 
 

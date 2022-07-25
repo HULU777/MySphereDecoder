@@ -34,7 +34,7 @@ function [nodelists, nVistedNodes] = SD_searchpair(H,rxSymbs,moduTypes,M,D)
         lambda = 0;
     else
         % transform to full-rank
-        lambda = 0.01;
+        lambda = 0.0001;
         n = max(size(H));
         ATA = H' * H + lambda * eye(n);
         R = chol(ATA);

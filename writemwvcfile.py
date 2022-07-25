@@ -54,11 +54,11 @@ def getmwvc(path,v_num,e_num):
 
 if __name__=='__main__':
     randomweight = 0; #  O: each weight = 1
-    B = 5
+    B = 128
     M = 2
     path = "B%dM%d.dat"%(B,M)
     # path = 'nodepairs.dat'  
-    v = 10
-    p = 18
+    v = 8128
+    p = 130466
     # path = 'bio-diseasome/bio-diseasome.mtx
     getmwvc(path,v,p)
