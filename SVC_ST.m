@@ -3,7 +3,7 @@
 % Reproduce the codes in 2022 sparse superimposed coding for short-packet URLLC
 % [15,4,9,2,1,5]
 % n=16; k=8,10bits   [16,4,7,2,1,4]  [16,4,12,2,1,6]
-%  [A, D] = SVC_STs(15,4,9,2,1,5);
+%  [A, D] = SVC_ST(15,4,9,2,1,5);
  
 function [A, D] = SVC_ST(n, QAM, B, M ,L , b0)
 % parameter =  [15,4,9,2,1,5];  %[n,QAM,B,M,L,b0]    [15,1,33,2,1,9]    [15,1,9,2,1,5]
@@ -27,7 +27,7 @@ for column = 1:M
 end
 sparsetQAM1 = kron(sparset(:,:,1),repmat(G(1,:),1,QAM));
 sparsetQAM2= kron(sparset(:,:,2),kron(G(2,:),ones(1,QAM)));
-sparsetQAM = sparsetQAM1 + sparsetQAM2;
+sparsetQAM = (sparsetQAM1 + sparsetQAM2)/2;
 
 bits = (b0+M*log2(QAM))*L;
 countdmin = 1;

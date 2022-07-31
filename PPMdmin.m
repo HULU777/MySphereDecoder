@@ -1,5 +1,5 @@
 function [PPMdmin,PPMAdmin] = PPMdmin(Z,L,ridx,EbNo)
-    ppm = eye(Z);  %BIBD7(); Z is the number of sparse signals
+    ppm = eye(Z)/sqrt(L);  %BIBD7(); Z is the number of sparse signals
     B = Z;
     signalset = zeros(B*L,Z^L);
     for ell = 1:L
@@ -18,7 +18,7 @@ function [PPMdmin,PPMAdmin] = PPMdmin(Z,L,ridx,EbNo)
     else
         nNP = 0;
     end
-    [mindproperty,~] = calculateED(codebook,nNP,1);
+    [mindproperty,~] = calculateED(codebook,0,1);  % nNP
     PPMdmin = mindproperty(1,1);
     PPMAdmin = mindproperty(1,2);
 end

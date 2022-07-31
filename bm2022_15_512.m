@@ -16,7 +16,7 @@ for i = 1:length(SNR)
     Ks = 2* ones(1,Nt);
 
     % coding matrix:   randn(Nr,Nt); % sqrt(1/2)*(randn(Nr,Nt) + 1j* randn(Nr,Nt));
-    QAM = 4; B1 = 9; L =1; B0 = 5;
+    QAM = 4; B1 = 9; L =1; b0 = 5;
     [A, D] = SVC_ST(n, QAM, B1, M ,L , b0);
     rxSymbs = zeros(Nr,1); % H*txSymbs;
     

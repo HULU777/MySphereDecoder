@@ -5,7 +5,7 @@ function [dmin,Admin,dminforUnitPower] = Dmin_for_EbNo(ridx,mppm,L,bits,countdmi
     for ell = 1:L
         signalset(B*(ell-1)+1:B*ell, :) = repmat(kron(mppm,ones(1,Z^(L-ell))) , 1 , Z^(ell-1) );
     end
-    signalset = signalset/2;
+    signalset = signalset;
     if size(ridx,1) ==1
         codebookfull = hadamards(signalset);
         codebook = codebookfull(ridx,:);
@@ -30,7 +30,7 @@ function [dmin,Admin,dminforUnitPower] = Dmin_for_EbNo(ridx,mppm,L,bits,countdmi
         Admin = Admin(1:countdmin,:);
     else
         %power of sparse signals is L
-        [mindproperty,~,~] = calculateED(codebook,0,countdmin);
+        [mindproperty,~,~] = calculateED(codebook,1,countdmin);
         dmin = mindproperty(1,1);
         dminforUnitPower = dmin;
         Admin = mindproperty(1,2);

@@ -1,7 +1,7 @@
 % CWC generate
 % Change the coding matrix to ZC-based matrix
 % how to normalize snr?
-% clear all;
+clear all;
 addpath('Functions'); 
 parameter = [3^5, 9, 6, 4];
 B=parameter(2);
@@ -9,6 +9,7 @@ M=parameter(3);
 d1=parameter(4);  % #nonzeros  EB/N0 in dB
 SNR = 25;   % dB
 Nt = B;
+Nr = Nt;
 n = B;
 
 tic
