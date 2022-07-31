@@ -3,19 +3,19 @@
 
 clear all;
 addpath('Functions');
-% EBN0dB=-2:2:6;     
+EBN0dB=0:2:16;     
 M=2;  % EB/N0 in dB
-% SNR=EBN0dB+10*log10(2);   % QPSK
-SNR = ones(1,8)*35;   % dB
+SNR=EBN0dB+10*log10(2);   % QPSK
+% SNR = ones(1,8)*35;   % dB
 % targeterr = [0.3 0.2 0.1 0.03 0.003 0.0004 0.00003 ];
 % run = ceil(50 ./ targeterr);
-run = ones(1,length(SNR))*100;
+run = ones(1,length(SNR))*1000000;
 nErrs = zeros(1,length(SNR));
 nErrs1 = zeros(1,length(SNR));
 nDiff = zeros(1,length(SNR));
 % run = 2e6;
-Nt = 5; B = Nt;
-Nr = 2; n = Nr;
+Nt = 4; B = Nt;
+Nr = 4; n = Nr;
 % moduTypes = {'3psk','3psk','3psk'}; %
 
 % moduTypes = {'bpsk','bpsk','bpsk','bpsk'};
@@ -28,7 +28,7 @@ qam16 = 0;
 
 
 tic
-parfor i = 1:length(SNR)
+for i = 1:length(SNR)
     %generate msg bits
     tic
     j = 0;
@@ -100,8 +100,8 @@ fprintf('Modulations:')
 
 % fprintf('(SD) Error bits: %d out of %d\n',nErrs,length(msg) );
 % fprintf(' - (Hard SD) %d of %d leaf nodes are visited.', nVistedNodes,prod(Ms) );
-semilogy(SNR, BER,'-^');
-% semilogy(EBN0dB, BER,'-^');
+% semilogy(SNR, BER,'-^');
+semilogy(EBN0dB, BER,'-^');
 xlim([5,35]); 
 ylim([1e-5,1]);
 grid on;

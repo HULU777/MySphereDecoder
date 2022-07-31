@@ -1,24 +1,18 @@
+% verify outputs of  Sphere decoder and Brute-force is the same
 clear all; close all;
 addpath('Functions'); 
 M=2;  % #nonzeros  EB/N0 in dB     % dB
-run = 100; %2e4;
+run = 8; % 2e4;
 randsize = 2+ ceil(rand(1,2)*16);
-Nt = max(randsize); B = Nt;
-Nr = min(randsize); n = Nr;
-% moduTypes = {'3psk','3psk','3psk'}; %
-
-% moduTypes = {'bpsk','bpsk','bpsk','bpsk'};
-% Ks = ones(1,4);
-% offsets = [0,1,2,3];
-% Ms = [2,2,2,2];
-% constls = genConstls(moduTypes);
-qam16 = 0;
-% bits per symbol for each antenna
+Nt = 5; B = Nt;  % max(randsize)  min(randsize)
+Nr = 4; n = Nr;
+subset = 0;
+wrong = 0;
 
 
 tic
-for i = 1:run
-%     for j = 1:run/8
+for i = 1:8
+    for j = 1:run/8
     cellA={'3psk'};
     moduTypes = repmat(cellA,1,Nt);
     Ks = 2* ones(1,Nt);
@@ -55,30 +49,22 @@ for i = 1:run
          idx = find(nodelist{:,3} == nodeset(vv));
          nodeset_new(idx) = vv;
      end
-     
-%      if sum(find(nodeset_new(:, 1) <= nodeset_new(:, 2) ))
-%         disp('wrong in getNodeset');
-%      end
     
      pair_idx_SD = sub2ind(size(dmatrix),[nodeset_new(:,1); nodeset_new(:,2)],[nodeset_new(:,2);nodeset_new(:,1)]);
+     
      % comparison
     set = ismember(pair_idx_bf,pair_idx_SD);
     set_diff = setdiff(pair_idx_bf,pair_idx_SD);
-    if length(set_diff)>
-    if all(set)   % if not all 1
-        filename = "notright"+run;
-%         save('filename');
-        disp('SD > BF');
+    if ~isempty(set_diff)
+        if all(set)   % if not all 1
+%             disp('SD > BF');
+            subset = subset+1;
+        else
+            wrong = wrong +1;
+        end
     end
-%     end
+    end
 end
 toc
-
-function set = getNodeset(B,M)
-    idx_pair1 = nchoosek(1: B,M);
-%     idx_pair1 = B + 1 - idx_pair1;
-    set = sum((2).^(idx_pair1-1),2);  
-%     set = sort(set); % value from small to large
-%     seet = flip(set);   % value from large to small
-%     set = sort(set);
-end
+subset
+wrong

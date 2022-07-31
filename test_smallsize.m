@@ -1,24 +1,26 @@
+% verify outputs of  Sphere decoder and Brute-force is the same
 clear all; close all;
 addpath('Functions'); 
 M=2;  % #nonzeros  EB/N0 in dB     % dB
-run = 2e4;
+run = 8; % 2e4;
 randsize = 2+ ceil(rand(1,2)*16);
-Nt = max(randsize); B = Nt;
-Nr = min(randsize); n = Nr;
+Nt = 5; B = Nt;  % max(randsize)  min(randsize)
+Nr = 4; n = Nr;
 subset = 0;
 wrong = 0;
 
 
 tic
-parfor i = 1:8
+for i = 1:8
     for j = 1:run/8
     cellA={'3psk'};
     moduTypes = repmat(cellA,1,Nt);
     Ks = 2* ones(1,Nt);
 
     % coding matrix: 
-    A = randn(Nr,Nt); % sqrt(1/2)*(randn(Nr,Nt) + 1j* randn(Nr,Nt));     % complex
-
+%     A = randn(Nr,Nt); % sqrt(1/2)*(randn(Nr,Nt) + 1j* randn(Nr,Nt));     % complex
+    hmatrix = hadamard(8);
+    A = hmatrix(3:6,2:6);
     % H*txSymbs;
     rxSymbs = zeros(Nr,1); 
 
