@@ -6,7 +6,7 @@
 addpath('Functions'); 
 M=2;  % #nonzeros  EB/N0 in dB
 SNR = 25;   % dB
-Nt = 64; B = Nt;
+Nt = 512; B = Nt;
 Nr = 15; n = Nr;
 
 tic
@@ -17,7 +17,10 @@ for i = 1:length(SNR)
 
     % coding matrix:   randn(Nr,Nt); % sqrt(1/2)*(randn(Nr,Nt) + 1j* randn(Nr,Nt));
     QAM = 4; B1 = 9; L =1; b0 = 5;
-    [A, D] = SVC_ST(n, QAM, B1, M ,L , b0);
+    [~, D] = SVC_ST(n, QAM, B1, M ,L , b0);   % using partial Hadamard matrix
+    A = rand(n,B)>0.5;
+    A = -1*A;
+    A(A==0) = 1;
     rxSymbs = zeros(Nr,1); % H*txSymbs;
     
     % Threshold D

@@ -90,7 +90,7 @@ function [nodelists, nVistedNodes] = SD_searchpair(H,rxSymbs,moduTypes,M,D)
             [psvIdx,psv,psvBitLabels,traverseDone,count1,count_1] = moveToNextNode(psvIdx,psv,psvBitLabels,constls,count1,count_1);
 
         else % none leaf node
-%             aa0 = max(count1(curLevl),count_1(curLevl)) > B/2;
+            aa0 = max(count1(curLevl),count_1(curLevl)) > B/2;
             aa1 = max(count1(curLevl),count_1(curLevl)) > M;
             aa2 = abs(count1(curLevl)-count_1(curLevl)) >= curLevl;
             if ped(curLevl) >= lambdaML || aa1  || aa2%  ped > search radius, prune subtree

@@ -3,10 +3,10 @@
 % how to normalize snr?
 clear all;
 addpath('Functions'); 
-parameter = [3^5, 9, 6, 4];
+parameter = [3^5, 9, 6, 4];  %  21,4,7
 B=parameter(2);
-M=parameter(3);
-d1=parameter(4);  % #nonzeros  EB/N0 in dB
+d1=parameter(3);  % #nonzeros  EB/N0 in dB
+M=parameter(4);
 SNR = 25;   % dB
 Nt = B;
 Nr = Nt;
@@ -20,7 +20,7 @@ for i = 1:length(SNR)
 
     % coding matrix:   randn(Nr,Nt); % sqrt(1/2)*(randn(Nr,Nt) + 1j* randn(Nr,Nt));
     A = eye(B);   
-    D = sqrt(d1) - 1e-6;
+    D = sqrt(d1/M- 1e-6);
     rxSymbs = zeros(Nr,1); % H*txSymbs;
     
     % Threshold D

@@ -27,15 +27,11 @@ function [pairnum, pairIdx] = getNodesPairIndex(E,M)  % from down to up
 %         a = (1.1).^(idx_pair1-1);
         else
         idx_pair1 = nchoosek(idx0,M-m);  % llllllllless M for ccccccccccccwc???
-        a = sum((1.5).^(idx_pair1-1),2);
+        a = sum((1.1).^(idx_pair1-1),2);
     end
     pairnum = size(idx_pair1, 1);
     pairIdx = zeros(pairnum,2);
-    pairIdx(1: pairnum, 1) =  sum((1.5).^(idx1-1)) + a;
-    pairIdx(1: pairnum, 2) =  sum((1.5).^(idx_1-1)) + a;
-    aaa = find(pairIdx(:,1) == pairIdx(:,2));
-    if ~isempty(aaa)
-        disp(aaa);
-    end
+    pairIdx(1: pairnum, 1) =  sum((1.1).^(idx1-1)) + a;
+    pairIdx(1: pairnum, 2) =  sum((1.1).^(idx_1-1)) + a;
 end
 % end

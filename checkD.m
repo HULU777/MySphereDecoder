@@ -1,5 +1,6 @@
 % check mind after vertex cover algorithm
 % filenamecheck = "B"+B+"M"+M+'.txt';
+% for MPPM, power normalization is not solved, so directly observe remainedMPPM
 filenamecheck = "okk.txt";
 data = importdata(filenamecheck) ;  
 nonzeroidx = data(:,1) ;
