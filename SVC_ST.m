@@ -40,7 +40,7 @@ while k < 10
     cmatrix(cmatrix==0) = 1;
     hmatrix = hadamard(32);
     cmatrix = hmatrix(7:22,2:13);  % 4:23,2:10
-    cmatrix = hmatrix(7:21,7:15);
+    cmatrix = hmatrix(7:21,7:11);
     for i = 1:n-1
         for j = i+1:n
             miu = max(miu,cmatrix(i,:) * cmatrix(j,:).'/n);

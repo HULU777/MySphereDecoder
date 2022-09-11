@@ -1,10 +1,10 @@
-function signalset = MPPMset(B,L,M,deletenodes)
+function signalset = MPPMset(B,L,M,nodes)
 % in idxdelete, 1 means delete this vector
     pSize = 1;
     idx = nchoosek(1:B,M);
     if nargin > 3
-        idxdelete = find(deletenodes == 0);
-        idx = idx(idxdelete,:);
+        idxremained = find(nodes == 0);
+        idx = idx(idxremained ,:);
     end
     
     mppm = zeros(B,size(idx,1));

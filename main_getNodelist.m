@@ -1,4 +1,6 @@
 % clear all;
+% save nodespairs with their distance
+% then run main_iterateD.m: can choose those pairs with different distance
 addpath('Functions'); 
 M=2;  % #nonzeros  EB/N0 in dB
 SNR = 25;   % dB

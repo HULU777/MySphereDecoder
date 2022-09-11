@@ -83,10 +83,6 @@ function [out,nVistedNodes] = nrSphereDecoder(H,rxSymbs,moduTypes,outType)
         Qy = R' \ H' * rxSymbs;   % inv(R' ) * H' * rxSymbs;
     end
     
-    
-    
-    
-    
     % intinitalize patial symbol vector of the visiting node & PD
     % start form the root
     psv = constls{2,Nt}(1);

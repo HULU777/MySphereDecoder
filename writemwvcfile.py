@@ -56,7 +56,9 @@ if __name__=='__main__':
     randomweight = 0; #  O: each weight = 1
     B = 9
     M = 4
-    path = "CWC_B%dM%d.dat"%(B,M)
+    L = 1
+    # path = "bm2022_B%dM%d.dat"%(B,M)
+    path = "CWC_B%dM%dL%d_debugC++.dat"%(B,M,L) #"CWC_B%dM%d.dat"%(B,M)   # "
     # path = 'nodepairs.dat'  
     v = 126
     p = 5040

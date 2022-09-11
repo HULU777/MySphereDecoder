@@ -14,7 +14,7 @@ function [dmin,Admin,dminforUnitPower] = Dmin_for_EbNo(ridx,mppm,L,bits,countdmi
     end
 
     if nargin >5
-        [mindproperty,~,~] = calculateED(codebook,0,countdmin);   % calculate dmin with symbol power per bit = 1;
+        [mindproperty,~,~] = calculateED(codebook,1,countdmin);   % calculate dmin with symbol power per bit = 1;
         dminforUnitPower = mindproperty(1,1);
         if countdmin == 0
             countdmin = size(mindproperty,1);

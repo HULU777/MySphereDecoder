@@ -34,7 +34,7 @@ function [nodelists, nVistedNodes] = SD_searchpair(H,rxSymbs,moduTypes,M,D)
         lambda = 0;
     else
         % transform to full-rank
-        lambda = 0.0001;
+        lambda = 0.0000001;
         n = max(size(H));
         ATA = H' * H + lambda * eye(n);
         R = chol(ATA);
@@ -79,11 +79,11 @@ function [nodelists, nVistedNodes] = SD_searchpair(H,rxSymbs,moduTypes,M,D)
             if ped(curLevl) < lambdaML && count1(curLevl)==count_1(curLevl) && count1(curLevl) <= M%smaller euclidean 
                 bitsML = psvBitLabels;   % ???
                 if ~isempty(find(bitsML))
-                    nodelist{1} = ped(curLevl);
+                    nodelist{1} = sqrt(ped(curLevl) - lambda*Nt/M);
                     [nodelist{2},nodelist{3}] = getNodesPairIndex(bitsML,M);
                     nodelists{1} = [nodelists{1}; nodelist{1}];
                     nodelists{2} = [nodelists{2}; nodelist{2}];
-                    nodelists{3} = [nodelists{3}; nodelist{3}];
+                    nodelists{3}(end+1,1) ={ nodelist(3)};
                 end
             end 
             % go to next node (right or up)
